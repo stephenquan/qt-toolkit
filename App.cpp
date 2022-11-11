@@ -1,6 +1,6 @@
 #include "App.h"
 #include <QUrl>
-#include <QQmlEngine>
+#include <QGuiApplication>
 
 #ifdef EMSCRIPTEN
 #include <emscripten/val.h>
@@ -18,9 +18,11 @@ void sayHi()
 #endif
 
 App::App(QObject * parent) :
-    QObject(parent)
+    QObject(parent),
+    m_Clipboard(QGuiApplication::clipboard())
 {
 }
+
 QUrl App::href() const
 {
 #ifdef EMSCRIPTEN
@@ -29,4 +31,9 @@ QUrl App::href() const
 #else
     return QUrl();
 #endif
+}
+
+void App::copy(const QVariant& data)
+{
+    m_Clipboard->setText(data.toString());
 }

@@ -16,8 +16,8 @@ public:
     ~Engine();
 
     Q_INVOKABLE void clearComponentCache();
-    Q_INVOKABLE QString stringCompress(const QString& str);
-    Q_INVOKABLE QString stringUncompress(const QString& str);
+    Q_INVOKABLE void clearSingletons();
+    Q_INVOKABLE void trimComponentCache();
 
     QStringList allSelectors();
 

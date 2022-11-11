@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QClipboard>
+#include <QVariant>
 
 class App : public QObject
 {
@@ -12,8 +14,12 @@ class App : public QObject
 public:
     App(QObject* parent = nullptr);
 
+    Q_INVOKABLE void copy(const QVariant& data);
+
 protected:
     QUrl href() const;
+
+    QClipboard* m_Clipboard;
 
 };
 

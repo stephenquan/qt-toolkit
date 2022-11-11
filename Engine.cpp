@@ -18,14 +18,14 @@ void Engine::clearComponentCache()
     qmlEngine(this)->clearComponentCache();
 }
 
-QString Engine::stringCompress(const QString& str)
+void Engine::clearSingletons()
 {
-    return QString::fromUtf8(qCompress(str.toUtf8()).toBase64());
+    qmlEngine(this)->clearSingletons();
 }
 
-QString Engine::stringUncompress(const QString& str)
+void Engine::trimComponentCache()
 {
-    return QString::fromUtf8(qUncompress(QByteArray::fromBase64(str.toUtf8())));
+    qmlEngine(this)->trimComponentCache();
 }
 
 QStringList Engine::allSelectors()
