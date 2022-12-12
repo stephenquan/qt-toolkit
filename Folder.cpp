@@ -41,6 +41,7 @@ void Folder::setPath(const QString& path)
         return;
     }
     emit pathChanged();
+    emit existsChanged();
 }
 
 QUrl Folder::url() const
@@ -55,13 +56,18 @@ void Folder::setUrl(const QUrl& url)
 
 bool Folder::writeTextFile(const QString& fileName, const QString& text)
 {
+    return writeFile(fileName, text.toUtf8());
+}
+
+bool Folder::writeFile(const QString& fileName, const QByteArray& data)
+{
     QFile file(filePath(fileName));
     bool ok = file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     if (!ok)
     {
         return ok;
     }
-    file.write(text.toUtf8());
+    file.write(data);
     file.close();
     return true;
 }
@@ -74,4 +80,24 @@ QString Folder::filePath(const QString& fileName) const
 QUrl Folder::fileUrl(const QString& fileName) const
 {
     return QUrl::fromLocalFile(filePath(fileName));
+}
+
+Folder* Folder::folder(const QString& subdir) const
+{
+    return newFolder(path() + "/" + subdir);
+}
+
+bool Folder::mkpath()
+{
+    if (exists())
+    {
+        return true;
+    }
+
+    bool result = QDir().mkpath(m_dir.absolutePath());
+    if (exists())
+    {
+        emit existsChanged();
+    }
+    return result;
 }
