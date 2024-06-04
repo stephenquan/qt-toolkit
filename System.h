@@ -45,6 +45,8 @@ public:
     Q_INVOKABLE QByteArray hash(const QByteArray& data, Algorithm algorithm = Algorithm::Md5);
     Q_INVOKABLE UrlInfo* urlInfo(const QUrl& url);
     Q_INVOKABLE ImageBuffer* image(const QVariant& image);
+    Q_INVOKABLE QStringList enumerators(const QVariant& obj) const;
+    Q_INVOKABLE QVariant enumerator(const QVariant& obj, const QString& name) const;
 
 };
 
